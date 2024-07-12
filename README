@@ -1,0 +1,72 @@
+=============================
+=      Author & Subject     =
+=============================
+Hilla Heimberg
+Parachute Guardians- TypeScript & HTML5 Canvas Game
+
+=============================
+=      Folders & Files description     =
+=============================
+- src folder: The root directory
+	- main.ts- Entry point of the application.
+	- public class GameManager.ts-  Manages the overall game state and flow.
+	- public class KeyboardHandler.ts - Class for handling keyboard inputs. 
+
+	1. objects folder: Folder for game object classes.
+		ts files:
+		- public class GameObject- Abstract class for all game objects.
+		- public class Boat- Represents the boat object and extends from GameObject class.
+		- public class Plane- Represents the plane object and extends from GameObject class.
+		- public class Parachutist- Represents the parachutist object and extends from GameObject class.
+
+
+	2. logic folder: Folder for game logic classes and related interfaces.
+		ts files:
+		- public class GameLogic- Responsible for the game's core logic.
+		- public interface BoatController-  Interface for controlling boats.
+		- public class CollisionHandler- Handles collision detection.
+		- public interface GameCloser.ts -  Interface that GameManager implements and responsible for closing the game 
+	
+
+	3. ui folder: Folder for UI-related classes.
+		ts files:
+		- public class GameUIState- Represents the state of the game's UI.
+		- public class GameRenderer- Responsible for rendering the game's UI.
+
+
+=========================================================
+=          Design and Implementation details            =
+=========================================================
+The design decisions I made:
+
+1. In order to make the game as abstract as possible, I made sure to separate the logic from the objects and from the UI. This way, each one will be as independent and decoupled as possible.
+    Additionally, there is one class that manages the entire game, which is GameManager class. Only this class is aware of both the GameLogic class and the GameRenderer class, while each of 
+    them is not aware of the other. This way, I maintain independent and decoupled units.
+
+2. The Single Responsibility Principle - I made sure that each class has one role and responsibility.
+
+3. I debated whether to create classes for each of the game objects or not. In the end, I decided to create a class for each object to allow for easier addition of different functionalities for each
+    of them in the future.
+
+4. I added a function to the logic part that increases the speed of the parachutist's descent as the score goes up, in order to make the game more challenging and fun.
+
+5. The GameRenderer class receives the GameUIState class in its render function - 
+    I created the GameUIState class to contain all the information about the current state of the game (game objects, score, and lives), so I can create state object and send it in the render function
+    to GameRenderer, making it independent of logic. In other words, this design decision emphasizes that the part responsible for rendering the objects doesn't need to know about the logical
+    part of the game.
+
+6. The GameManager class implements the GameCloser interface and the GameLogic class receives the GameCloser interface in its constructor - 
+    I decided that the GameManager would be responsible for closing the game, so to do this, I decided that the GameManager would implement the GameCloser interface with a close function,
+    and we would pass the interface to the GameLogic constructor. Thus, the class responsible for the logic doesn't need to be aware of the GameManager class but only exposed to the interface
+    responsible for closing the game, so when we need to close the game, we'll use a call to the interface function.
+
+7. The GameLogic class implements the BoatController interface, and the KeyboardHandler class receives the BoatController interface in its constructor - 
+    I decided that the GameLogic would be responsible for moving the boat, so to achieve this, I decided that it would implement the BoatController interface with the functions moveBoatLeft and 
+    moveBoatRight. Then, we'll pass this interface to the KeyboardHandler constructor. This way, the class responsible for handling the keyboard doesn't need to be aware of the logical part but 
+    only of the interface responsible for the movement, so when we need to move the boat, we'll use a call to the interface function.
+
+
+=============================
+=    Notes   =
+=============================
+HAVE A GOOD DAY :D
